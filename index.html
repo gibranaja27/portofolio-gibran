@@ -718,10 +718,26 @@
 
     <!-- ================= SCRIPT ================= -->
     <script>
-      // Mobile menu
-      const btn = document.getElementById("menuBtn");
-      const menu = document.getElementById("mobileMenu");
-      btn.addEventListener("click", () => menu.classList.toggle("hidden"));
+     // Mobile menu
+  const btn = document.getElementById("menuBtn");
+  const menu = document.getElementById("mobileMenu");
+
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation(); // penting biar gak ke-trigger document click
+    menu.classList.toggle("hidden");
+  });
+
+  // ✅ Klik di luar menu = close
+  document.addEventListener("click", (e) => {
+    const isClickInsideMenu = menu.contains(e.target);
+    const isClickButton = btn.contains(e.target);
+
+    if (!isClickInsideMenu && !isClickButton) {
+      menu.classList.add("hidden");
+    }
+  });
+
+  // (kode kamu yang lain tetap)
 
       // Reveal animation
       function reveal() {
@@ -757,6 +773,8 @@
   );
 
   cards.forEach((card) => observer.observe(card));
+
+
     </script>
   </body>
 </html>
